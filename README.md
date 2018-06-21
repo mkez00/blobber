@@ -18,13 +18,14 @@ Why not use your platform's native CLI?  AWS CLI (for example) does not allow yo
 Install and AWS S3 Configuration
 -----------------------------------
 
-1) Download `blobber` binary  and copy to `/usr/local/bin/` (<a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-linux.zip" target="_blank">Linux Download</a>, <a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-mac.zip" target="_blank">MacOS Download</a>, <a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-win.zip" target="_blank">Windows Download</a>
+1) Download `blobber` binary (<a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-linux.zip" target="_blank">Linux Download</a>, <a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-mac.zip" target="_blank">MacOS Download</a>, <a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-win.zip" target="_blank">Windows Download</a>
 )
-2) Run `blobber init`
-3) Create AWS S3 bucket for use with Blobber
-4) Create a new user with programmatic access and give access to S3 bucket (keep Access Key ID and Secret Access Key for next step)
-5) Update `.blobber` located at `~/.blobber` updating AWS requiring configuruation options (`AwsAccessKeyId`, `AwsSecretAccessKey`, `AwsS3Bucket` and `AwsRegion`)
-6) Start using Blobber
+2) If on Linux/MacOS, copy to `/usr/local/bin/`.  If on Windows, update Path environment variable to include directory where executable resides
+3) Run `blobber init`
+4) Create AWS S3 bucket for use with Blobber
+5) Create a new user with programmatic access and give access to S3 bucket (keep Access Key ID and Secret Access Key for next step)
+6) Update `.blobber` located at `~/.blobber` updating AWS requiring configuruation options (`AwsAccessKeyId`, `AwsSecretAccessKey`, `AwsS3Bucket` and `AwsRegion`)
+7) Start using Blobber
 
 Usage
 -----------------------------------
