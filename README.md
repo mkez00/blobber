@@ -4,7 +4,7 @@ Blobber
 Overview
 -----------------------------------
 
-Blobber is a CLI program that acts as a wrapper around common cloud storage SDK's which allows users to easily upload/download desired content without having to constantly remember or retrieve access credentials and configuration details to a specific storage container.  
+Blobber is a CLI program that simplifies cloud blob storage access when you just want to securely upload/download files without having to constantly remember or retrieve access credentials and configuration details to a specific storage container.  
 
 How It Works?
 -----------------------------------
