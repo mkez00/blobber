@@ -11,7 +11,7 @@ How It Works?
 
 A user creates a storage container on the cloud provider of their choice (currently only AWS S3 is supported).  After installing the binary for their respective platform they run `blobber init` which will generate a configuration file that requires the user to update with their credentials and other configuration options.  After they can start using the program to upload/download content to the defined storage container without having to worry about re-entering authentication credentials and other configuration settings.
 
-Why not just use `scp`?  Depending on your network configuration and platforms this may not be trivial or even possible.
+Why not just use `scp`?  Depending on your network configuration and/or platform this may not be trivial or even possible.
 
 Why not use your platform's native CLI?  AWS CLI (for example) does not allow you to set a default bucket so you must always specify one when accessing any S3 functionality.  Blobber allows you to setup all configuration details prior and never have to worry about them again.
 
