@@ -43,6 +43,8 @@ func main() {
 		fmt.Printf("%+v\n", config)
 	} else if action == "version" {
 		fmt.Println(getVersion())
+	} else {
+		fmt.Println(action + " is not a valid argument")
 	}
 }
 
