@@ -4,7 +4,7 @@ Blobber
 Overview
 -----------------------------------
 
-This program solves the problem of giving a user an easily accessible blob storage when doing day to day activities.  Utilizing storage backends by common providers (AWS S3 supported only for now) a user configures the storage endpoint and access credentials once and can upload/download content to that storage container as desired.
+This program solves the problem of giving a user an easily accessible blob storage application from the terminal.  Utilizing storage backends by common providers (AWS S3 supported only for now) a user configures the storage endpoint and access credentials once and can upload/download content to that storage container as desired.
 
 Why not just use scp?  Depending on your network configuration this may not be trivial.
 
@@ -25,3 +25,8 @@ Usage
 3) Upload item to bucket `blobber put <ITEM_NAME>`
 4) Delete item from bucket `blobber delete <ITEM_NAME>`
 5) List config options `blobber config`
+
+TODO
+-----------------------------------
+
+1) When referencing file outside of working directory strip directories when persisting to object storage
