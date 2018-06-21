@@ -25,8 +25,3 @@ Usage
 3) Upload item to bucket `blobber put <ITEM_NAME>`
 4) Delete item from bucket `blobber delete <ITEM_NAME>`
 5) List config options `blobber config`
-
-TODO
------------------------------------
-
-1) When referencing file outside of working directory strip directories when persisting to object storage

@@ -1,6 +1,6 @@
 package services
 
-import "blobber/models"
+import "github.com/mkez00/blobber/models"
 
 type Base interface {
 	ListItems(config models.Config) []models.Item

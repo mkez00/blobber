@@ -1,9 +1,11 @@
 package services
 
 import (
-	"blobber/models"
 	"fmt"
 	"os"
+	"path/filepath"
+
+	"github.com/mkez00/blobber/models"
 
 	"github.com/aws/aws-sdk-go/aws/credentials"
 
@@ -41,6 +43,7 @@ func (a AmazonS3) ListItems(config models.Config) []models.Item {
 }
 
 func (a AmazonS3) PutItem(config models.Config, filename string) models.Item {
+
 	item := models.Item{}
 
 	sess, bucket := getSessionAndBucket(config)
@@ -53,6 +56,8 @@ func (a AmazonS3) PutItem(config models.Config, filename string) models.Item {
 	defer file.Close()
 
 	uploader := s3manager.NewUploader(sess)
+
+	filename = filepath.Base(filename)
 
 	_, err = uploader.Upload(&s3manager.UploadInput{
 		Bucket: aws.String(bucket),

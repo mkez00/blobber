@@ -1,10 +1,11 @@
 package main
 
 import (
-	"blobber/models"
-	"blobber/services"
 	"fmt"
 	"os"
+
+	"github.com/mkez00/blobber/models"
+	"github.com/mkez00/blobber/services"
 )
 
 func main() {
@@ -40,6 +41,8 @@ func main() {
 		printHelp()
 	} else if action == "config" {
 		fmt.Println(config)
+	} else if action == "version" {
+		fmt.Println(getVersion())
 	}
 }
 
@@ -62,7 +65,7 @@ func processDeleteItem(service services.Base, config models.Config, args []strin
 func processPutItem(service services.Base, config models.Config, args []string) {
 	if len(args) > 2 {
 		item := service.PutItem(config, args[2])
-		fmt.Println(item)
+		fmt.Println(item.Name + " successfully put")
 	} else {
 		fmt.Println("\"blobber put\" requires at least 1 argument")
 	}
@@ -94,4 +97,8 @@ func printHelp() {
 	fmt.Println("  list\t\tList all items in defined bucket")
 	fmt.Println("  put\t\tPut item in storage")
 
+}
+
+func getVersion() string {
+	return "0.0.1"
 }
