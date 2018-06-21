@@ -40,7 +40,7 @@ func main() {
 	} else if action == "help" {
 		printHelp()
 	} else if action == "config" {
-		fmt.Println(config)
+		fmt.Printf("%+v\n", config)
 	} else if action == "version" {
 		fmt.Println(getVersion())
 	}
