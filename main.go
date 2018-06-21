@@ -96,6 +96,7 @@ func printHelp() {
 	fmt.Println("  get\t\tRetrieve item from storage")
 	fmt.Println("  list\t\tList all items in defined bucket")
 	fmt.Println("  put\t\tPut item in storage")
+	fmt.Println("  version\tGet Blobber version")
 
 }
 
