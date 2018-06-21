@@ -13,7 +13,8 @@ Why not use your platforms native CLI?  AWS CLI (for example) does not have a de
 Install and AWS S3 Configuration
 -----------------------------------
 
-1) Download `blobber` binary  and copy to `/usr/local/bin/` (<a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-linux.zip" target="_blank">Linux Download</a>, <a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-mac.zip" target="_blank">MacOS Download</a>)
+1) Download `blobber` binary  and copy to `/usr/local/bin/` (<a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-linux.zip" target="_blank">Linux Download</a>, <a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-mac.zip" target="_blank">MacOS Download</a>, <a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-win.zip" target="_blank">Windows Download</a>
+)
 2) Run `blobber init`
 3) Create AWS S3 bucket for use with Blobber
 4) Create a new user with programmatic access and give access to S3 bucket (keep Access Key ID and Secret Access Key for next step)
