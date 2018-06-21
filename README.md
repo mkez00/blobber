@@ -13,7 +13,7 @@ Why not use your platforms native CLI?  AWS CLI (for example) does not have a de
 Install
 -----------------------------------
 
-1) Download `blobber` binary  and copy to `/usr/local/bin/`. <a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-linux.zip" target="_blank">Linux</a>, <a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-mac.zip" target="_blank">Mac</a>
+1) Download `blobber` binary  and copy to `/usr/local/bin/` (<a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-linux.zip" target="_blank">Linux Download</a>, <a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-mac.zip" target="_blank">MacOS Download</a>)
 2) Run `blobber init`
 3) Modify `.blobber` config which defaults to `~\.blobber`
 
