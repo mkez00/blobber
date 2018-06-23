@@ -17,6 +17,8 @@ type Config struct {
 	AwsSecretAccessKey string
 	AwsS3Bucket        string
 	AwsRegion          string
+	GcpCredentialsFile string
+	GcpBucketName      string
 }
 
 func NewConfig() Config {
@@ -64,7 +66,8 @@ func CreateConfigFile(filepath string) {
 		"# GENERAL CONFIGURATION\n" +
 		"##########################################################\n\n" +
 
-		"StorageService = \"AmazonS3\"\n\n" +
+		"StorageService = \"AmazonS3\"\n" +
+		"#StorageService = \"GoogleCloudStorage\"\n\n" +
 
 		"##########################################################\n" +
 		"# AWS CONFIGURATION\n" +
@@ -73,7 +76,15 @@ func CreateConfigFile(filepath string) {
 		"AwsAccessKeyId = \"\"\n" +
 		"AwsSecretAccessKey = \"\"\n" +
 		"AwsS3Bucket = \"\"\n" +
-		"AwsRegion = \"\"\n"
+		"AwsRegion = \"\"\n\n" +
+
+		"##########################################################\n" +
+		"# GOOGLE CLOUD CONFIGURATION\n" +
+		"##########################################################\n\n" +
+
+		"# credential file must be in home directory\n" +
+		"GcpCredentialsFile = \"\"\n" +
+		"GcpBucketName = \"\"\n"
 
 	d1 := []byte(str)
 	err := ioutil.WriteFile(filepath, d1, 0640)

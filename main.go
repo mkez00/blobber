@@ -82,6 +82,8 @@ func printItems(items []models.Item) {
 func getImplementation(config models.Config) services.Base {
 	if config.StorageService == "AmazonS3" {
 		return services.AmazonS3{}
+	} else if config.StorageService == "GoogleCloudStorage" {
+		return services.GoogleCloudStorage{}
 	} else {
 		return services.AmazonS3{}
 	}
