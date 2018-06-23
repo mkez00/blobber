@@ -30,8 +30,7 @@ func main() {
 	service := getImplementation(config)
 
 	if action == "list" {
-		items := service.ListItems(config)
-		printItems(items)
+		processListItems(service, config)
 	} else if action == "put" {
 		processPutItem(service, config, os.Args)
 	} else if action == "get" {
@@ -47,6 +46,15 @@ func main() {
 	} else {
 		fmt.Println(action + " is not a valid argument")
 	}
+}
+
+func processListItems(service services.BaseBlobService, config models.Config) {
+	items, err := service.ListItems(config)
+	if err != nil {
+		log.Fatalf("Failed to retrieve items from bucket: %v", err)
+		return
+	}
+	printItems(items)
 }
 
 func processGetItem(service services.BaseBlobService, config models.Config, args []string) {

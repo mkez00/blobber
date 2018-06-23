@@ -18,7 +18,7 @@ import (
 type AmazonS3 struct {
 }
 
-func (a AmazonS3) ListItems(config models.Config) []models.Item {
+func (a AmazonS3) ListItems(config models.Config) ([]models.Item, error) {
 
 	sess, bucket := getSessionAndBucket(config)
 
@@ -26,7 +26,7 @@ func (a AmazonS3) ListItems(config models.Config) []models.Item {
 	svc := s3.New(sess)
 	resp, err := svc.ListObjects(&s3.ListObjectsInput{Bucket: aws.String(bucket)})
 	if err != nil {
-		exitErrorf("Unable to list items in bucket %q, %v", bucket, err)
+		return nil, err
 	}
 
 	items := []models.Item{}
@@ -39,7 +39,7 @@ func (a AmazonS3) ListItems(config models.Config) []models.Item {
 		items = append(items, item)
 	}
 
-	return items
+	return items, nil
 }
 
 func (a AmazonS3) PutItem(config models.Config, filename string) (models.Item, error) {

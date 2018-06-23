@@ -32,13 +32,12 @@ func getClient(ctx context.Context, config models.Config) (storage.Client, error
 	return *client, nil
 }
 
-func (a GoogleCloudStorage) ListItems(config models.Config) []models.Item {
+func (a GoogleCloudStorage) ListItems(config models.Config) ([]models.Item, error) {
 
 	ctx := context.Background()
 	client, err := getClient(ctx, config)
 	if err != nil {
-		log.Fatalf("Failed to create new client: %v", err)
-		return nil
+		return nil, err
 	}
 
 	// Creates a Bucket instance.
@@ -58,7 +57,7 @@ func (a GoogleCloudStorage) ListItems(config models.Config) []models.Item {
 		items = append(items, item)
 	}
 
-	return items
+	return items, err
 }
 func (a GoogleCloudStorage) PutItem(config models.Config, filename string) (models.Item, error) {
 	item := models.Item{}
