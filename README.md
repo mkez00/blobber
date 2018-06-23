@@ -15,16 +15,28 @@ Why not just use `scp`?  Depending on your network configuration and/or platform
 
 Why not use your platform's native CLI?  AWS CLI (for example) does not allow you to set a default bucket so you must always specify one when accessing any S3 functionality.  Blobber allows you to setup all configuration details prior and never have to worry about them again.
 
-Install and AWS S3 Configuration
+Install and Initialization
 -----------------------------------
 
 1) Download `blobber` binary (<a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-linux.zip" target="_blank">Linux Download</a>, <a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-mac.zip" target="_blank">MacOS Download</a>, <a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-win.zip" target="_blank">Windows Download</a>)
 2) If on Linux/MacOS, copy to `/usr/local/bin/`.  If on Windows, update Path environment variable to include directory where executable resides
 3) Run `blobber init`
-4) Create AWS S3 bucket for use with Blobber
-5) Create a new user with programmatic access and give access to S3 bucket (keep Access Key ID and Secret Access Key for next step)
-6) Update `.blobber` located at `~/.blobber` updating AWS requiring configuruation options (`AwsAccessKeyId`, `AwsSecretAccessKey`, `AwsS3Bucket` and `AwsRegion`)
-7) Start using Blobber
+
+AWS S3 Configuration
+---------------------------------
+
+1) Create AWS S3 bucket for use with Blobber
+2) Create a new user with programmatic access and give access to S3 bucket (keep Access Key ID and Secret Access Key for next step)
+3) Update `.blobber` located at `~/.blobber` setting `StorageService` to `AmazonS3` and  updating AWS required configuruation options (`AwsAccessKeyId`, `AwsSecretAccessKey`, `AwsS3Bucket` and `AwsRegion`)
+4) Start using Blobber
+
+Google Cloud Storage Configuration
+-----------------------------------
+
+1) Create Google Cloud Storage bucket for use with blobber
+2) Create Service Account Key and download JSON credentials file
+3) Put credentials file in home directory
+4) Update `.blobber` located at `~/.blobber` setting `StorageService` to `GoogleCloudStorage` and updating GCS required configuration options (`GcpCredentialsFile` and `GcpBucketName`)  
 
 Usage
 -----------------------------------
