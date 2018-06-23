@@ -9,7 +9,7 @@ Blobber is a CLI program that simplifies cloud blob storage access when you just
 How It Works?
 -----------------------------------
 
-A user creates a storage container on the cloud provider of their choice.  After installing the binary for their respective platform they run `blobber init` which will generate a configuration file that requires a one time update by the user with their credentials and other configuration options.  After doing so they can start using the program to upload/download content to the defined storage container without having to worry about re-entering authentication credentials and other configuration settings.
+A user creates a storage container on one of the supported cloud provider's platform (AWS S3 or Google Cloud Storage).  After installing the binary for their respective platform they run `blobber init` which will generate a configuration file that requires a one time update by the user with their credentials and other configuration options.  After doing so they can start using the program to upload/download content to the defined storage container without having to worry about re-entering authentication credentials and other configuration settings.
 
 Why not just use `scp`?  Depending on your network configuration and/or platform this may not be trivial or even possible.
 

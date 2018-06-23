@@ -1,7 +1,6 @@
 package services
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 
@@ -131,9 +130,4 @@ func getSessionAndBucket(config models.Config) (*session.Session, string) {
 			"")},
 	)
 	return sess, bucket
-}
-
-func exitErrorf(msg string, args ...interface{}) {
-	fmt.Fprintf(os.Stderr, msg+"\n", args...)
-	os.Exit(1)
 }
