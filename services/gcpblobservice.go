@@ -2,7 +2,6 @@ package services
 
 import (
 	"context"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -61,21 +60,19 @@ func (a GoogleCloudStorage) ListItems(config models.Config) []models.Item {
 
 	return items
 }
-func (a GoogleCloudStorage) PutItem(config models.Config, filename string) models.Item {
+func (a GoogleCloudStorage) PutItem(config models.Config, filename string) (models.Item, error) {
 	item := models.Item{}
 
 	ctx := context.Background()
 	client, err := getClient(ctx, config)
 	if err != nil {
-		log.Fatalf("Failed to create new client: %v", err)
-		return item
+		return item, err
 	}
 	bucket := client.Bucket(config.GcpBucketName)
 
 	file, err := os.Open(filename)
 	if err != nil {
-		log.Fatalf("Failed to create new client: %v", err)
-		return item
+		return item, err
 	}
 	defer file.Close()
 
@@ -83,68 +80,64 @@ func (a GoogleCloudStorage) PutItem(config models.Config, filename string) model
 	writer := bucket.Object(filename).NewWriter(ctx)
 
 	if _, err := io.Copy(writer, file); err != nil {
-		log.Fatalf("Failed to write new object: %v", err)
-		return item
+		return item, err
 	}
 	if err := writer.Close(); err != nil {
-		log.Fatalf("Failed to closer writer: %v", err)
-		return item
+		return item, err
 	}
 
 	item.Name = filename
-	return item
+	return item, nil
 }
 
-func (a GoogleCloudStorage) GetItem(config models.Config, item string) {
+func (a GoogleCloudStorage) GetItem(config models.Config, itemName string) (models.Item, error) {
 
+	item := models.Item{}
 	ctx := context.Background()
 	client, err := getClient(ctx, config)
 	if err != nil {
-		log.Fatalf("Failed to create new client: %v", err)
-		return
+		return item, err
 	}
 
 	bucket := client.Bucket(config.GcpBucketName)
-	reader, err := bucket.Object(item).NewReader(ctx)
+	reader, err := bucket.Object(itemName).NewReader(ctx)
 	if err != nil {
-		log.Fatalf("Failed to create new reader: %v", err)
-		return
+		return item, err
 	}
 
 	defer reader.Close()
 
 	fileContent, err := ioutil.ReadAll(reader)
 	if err != nil {
-		log.Fatalf("Failed to read data from bucket: %v", err)
-		return
+		return item, err
 	}
 
-	file, err := os.Create(item)
+	file, err := os.Create(itemName)
 	if err != nil {
-		log.Fatalf("Failed to create new file: %v", err)
-		return
+		return item, err
 	}
 	defer file.Close()
 
 	numBytes, err := file.Write(fileContent)
 
-	fmt.Println("Downloaded", file.Name(), numBytes, "bytes")
+	item.Name = file.Name()
+	item.FileSize = int64(numBytes)
+
+	return item, nil
 }
 
-func (a GoogleCloudStorage) DeleteItem(config models.Config, obj string) {
+func (a GoogleCloudStorage) DeleteItem(config models.Config, obj string) (string, error) {
 	ctx := context.Background()
 	client, err := getClient(ctx, config)
 	if err != nil {
-		log.Fatalf("Failed to create new client: %v", err)
-		return
+		return "", err
 	}
 
 	bucket := client.Bucket(config.GcpBucketName)
 	err = bucket.Object(obj).Delete(ctx)
 	if err != nil {
-		fmt.Println("Error deleting object", err)
-		return
+		return "", err
 	}
 
-	fmt.Printf("Object %q successfully deleted\n", obj)
+	return obj, nil
 }

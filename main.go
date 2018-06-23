@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/mkez00/blobber/models"
@@ -48,25 +49,39 @@ func main() {
 	}
 }
 
-func processGetItem(service services.Base, config models.Config, args []string) {
+func processGetItem(service services.BaseBlobService, config models.Config, args []string) {
 	if len(args) > 2 {
-		service.GetItem(config, args[2])
+		item, err := service.GetItem(config, args[2])
+		if err != nil {
+			log.Fatalf("Failed to get item from bucket: %v", err)
+			return
+		}
+		fmt.Println("Downloaded", item.Name, item.FileSize, "bytes")
 	} else {
 		fmt.Println("\"blobber get\" requires at least 1 argument")
 	}
 }
 
-func processDeleteItem(service services.Base, config models.Config, args []string) {
+func processDeleteItem(service services.BaseBlobService, config models.Config, args []string) {
 	if len(args) > 2 {
-		service.DeleteItem(config, args[2])
+		msg, err := service.DeleteItem(config, args[2])
+		if err != nil {
+			log.Fatalf("Failed to delete item from bucket: %v", err)
+			return
+		}
+		fmt.Printf("Object %q successfully deleted\n", msg)
 	} else {
 		fmt.Println("\"blobber delete\" requires at least 1 argument")
 	}
 }
 
-func processPutItem(service services.Base, config models.Config, args []string) {
+func processPutItem(service services.BaseBlobService, config models.Config, args []string) {
 	if len(args) > 2 {
-		item := service.PutItem(config, args[2])
+		item, err := service.PutItem(config, args[2])
+		if err != nil {
+			log.Fatalf("Failed to put item into bucket: %v", err)
+			return
+		}
 		fmt.Println(item.Name + " successfully put")
 	} else {
 		fmt.Println("\"blobber put\" requires at least 1 argument")
@@ -79,7 +94,7 @@ func printItems(items []models.Item) {
 	}
 }
 
-func getImplementation(config models.Config) services.Base {
+func getImplementation(config models.Config) services.BaseBlobService {
 	if config.StorageService == "AmazonS3" {
 		return services.AmazonS3{}
 	} else if config.StorageService == "GoogleCloudStorage" {

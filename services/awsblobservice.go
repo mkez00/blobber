@@ -42,7 +42,7 @@ func (a AmazonS3) ListItems(config models.Config) []models.Item {
 	return items
 }
 
-func (a AmazonS3) PutItem(config models.Config, filename string) models.Item {
+func (a AmazonS3) PutItem(config models.Config, filename string) (models.Item, error) {
 
 	item := models.Item{}
 
@@ -50,7 +50,7 @@ func (a AmazonS3) PutItem(config models.Config, filename string) models.Item {
 
 	file, err := os.Open(filename)
 	if err != nil {
-		exitErrorf("Unable to open file %q, %v", err)
+		return item, err
 	}
 
 	defer file.Close()
@@ -65,23 +65,25 @@ func (a AmazonS3) PutItem(config models.Config, filename string) models.Item {
 		Body:   file,
 	})
 	if err != nil {
-		// Print the error and exit.
-		exitErrorf("Unable to upload %q to %q, %v", filename, bucket, err)
+		return item, err
 	}
 
 	item.Name = filename
 
-	return item
+	return item, nil
 }
 
-func (a AmazonS3) GetItem(config models.Config, item string) {
+func (a AmazonS3) GetItem(config models.Config, itemName string) (models.Item, error) {
+
+	item := models.Item{}
+
 	sess, bucket := getSessionAndBucket(config)
 
 	downloader := s3manager.NewDownloader(sess)
 
-	file, err := os.Create(item)
+	file, err := os.Create(itemName)
 	if err != nil {
-		exitErrorf("Unable to open file %q, %v", err)
+		return item, err
 	}
 
 	defer file.Close()
@@ -89,29 +91,35 @@ func (a AmazonS3) GetItem(config models.Config, item string) {
 	numBytes, err := downloader.Download(file,
 		&s3.GetObjectInput{
 			Bucket: aws.String(bucket),
-			Key:    aws.String(item),
+			Key:    aws.String(itemName),
 		})
 	if err != nil {
-		exitErrorf("Unable to download item %q, %v", item, err)
+		return item, err
 	}
 
-	fmt.Println("Downloaded", file.Name(), numBytes, "bytes")
+	item.Name = file.Name()
+	item.FileSize = numBytes
+	return item, nil
 }
 
-func (a AmazonS3) DeleteItem(config models.Config, obj string) {
+func (a AmazonS3) DeleteItem(config models.Config, obj string) (string, error) {
 	sess, bucket := getSessionAndBucket(config)
+
 	// Create S3 service client
 	svc := s3.New(sess)
 
 	// Delete the item
-	svc.DeleteObject(&s3.DeleteObjectInput{Bucket: aws.String(bucket), Key: aws.String(obj)})
+	_, err := svc.DeleteObject(&s3.DeleteObjectInput{Bucket: aws.String(bucket), Key: aws.String(obj)})
+	if err != nil {
+		return "", err
+	}
 
 	svc.WaitUntilObjectNotExists(&s3.HeadObjectInput{
 		Bucket: aws.String(bucket),
 		Key:    aws.String(obj),
 	})
 
-	fmt.Printf("Object %q successfully deleted\n", obj)
+	return obj, nil
 }
 
 func getSessionAndBucket(config models.Config) (*session.Session, string) {
