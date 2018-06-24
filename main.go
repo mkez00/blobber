@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/mkez00/blobber/models"
 	"github.com/mkez00/blobber/services"
@@ -35,7 +36,7 @@ func main() {
 	}
 	service := getImplementation(config)
 
-	switch action {
+	switch strings.ToLower(action) {
 	case "list":
 		processListItems(service, config)
 	case "put":
@@ -110,10 +111,10 @@ func printItems(items []models.Item) {
 }
 
 func getImplementation(config models.Config) services.BaseBlobService {
-	switch config.StorageService {
-	case "AmazonS3":
+	switch strings.ToLower(config.StorageService) {
+	case "amazons3":
 		return services.AmazonS3{}
-	case "GoogleCloudStorage":
+	case "googlecloudstorage":
 		return services.GoogleCloudStorage{}
 	default:
 		return services.AmazonS3{}
