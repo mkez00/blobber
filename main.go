@@ -38,13 +38,13 @@ func main() {
 
 	switch strings.ToLower(action) {
 	case "list":
-		processListItems(service, config)
+		processListItems(service, &config)
 	case "put":
-		processPutItem(service, config, os.Args)
+		processPutItem(service, &config, os.Args)
 	case "get":
-		processGetItem(service, config, os.Args)
+		processGetItem(service, &config, os.Args)
 	case "delete":
-		processDeleteItem(service, config, os.Args)
+		processDeleteItem(service, &config, os.Args)
 	case "help":
 		printHelp()
 	case "config":
@@ -56,7 +56,7 @@ func main() {
 	}
 }
 
-func processListItems(service services.BaseBlobService, config models.Config) {
+func processListItems(service services.BaseBlobService, config *models.Config) {
 	items, err := service.ListItems(config)
 	if err != nil {
 		log.Fatalf("Failed to retrieve items from bucket: %v", err)
@@ -65,7 +65,7 @@ func processListItems(service services.BaseBlobService, config models.Config) {
 	printItems(items)
 }
 
-func processGetItem(service services.BaseBlobService, config models.Config, args []string) {
+func processGetItem(service services.BaseBlobService, config *models.Config, args []string) {
 	if len(args) > 2 {
 		item, err := service.GetItem(config, args[2])
 		if err != nil {
@@ -78,7 +78,7 @@ func processGetItem(service services.BaseBlobService, config models.Config, args
 	}
 }
 
-func processDeleteItem(service services.BaseBlobService, config models.Config, args []string) {
+func processDeleteItem(service services.BaseBlobService, config *models.Config, args []string) {
 	if len(args) > 2 {
 		msg, err := service.DeleteItem(config, args[2])
 		if err != nil {
@@ -91,7 +91,7 @@ func processDeleteItem(service services.BaseBlobService, config models.Config, a
 	}
 }
 
-func processPutItem(service services.BaseBlobService, config models.Config, args []string) {
+func processPutItem(service services.BaseBlobService, config *models.Config, args []string) {
 	if len(args) > 2 {
 		item, err := service.PutItem(config, args[2])
 		if err != nil {

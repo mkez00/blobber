@@ -17,7 +17,7 @@ import (
 type AmazonS3 struct {
 }
 
-func (a AmazonS3) ListItems(config models.Config) ([]models.Item, error) {
+func (a AmazonS3) ListItems(config *models.Config) ([]models.Item, error) {
 
 	sess, bucket := getSessionAndBucket(config)
 
@@ -41,7 +41,7 @@ func (a AmazonS3) ListItems(config models.Config) ([]models.Item, error) {
 	return items, nil
 }
 
-func (a AmazonS3) PutItem(config models.Config, filename string) (models.Item, error) {
+func (a AmazonS3) PutItem(config *models.Config, filename string) (models.Item, error) {
 
 	item := models.Item{}
 
@@ -72,7 +72,7 @@ func (a AmazonS3) PutItem(config models.Config, filename string) (models.Item, e
 	return item, nil
 }
 
-func (a AmazonS3) GetItem(config models.Config, itemName string) (models.Item, error) {
+func (a AmazonS3) GetItem(config *models.Config, itemName string) (models.Item, error) {
 
 	item := models.Item{}
 
@@ -101,7 +101,7 @@ func (a AmazonS3) GetItem(config models.Config, itemName string) (models.Item, e
 	return item, nil
 }
 
-func (a AmazonS3) DeleteItem(config models.Config, obj string) (string, error) {
+func (a AmazonS3) DeleteItem(config *models.Config, obj string) (string, error) {
 	sess, bucket := getSessionAndBucket(config)
 
 	// Create S3 service client
@@ -121,7 +121,7 @@ func (a AmazonS3) DeleteItem(config models.Config, obj string) (string, error) {
 	return obj, nil
 }
 
-func getSessionAndBucket(config models.Config) (*session.Session, string) {
+func getSessionAndBucket(config *models.Config) (*session.Session, string) {
 	bucket := config.AwsS3Bucket
 	sess, _ := session.NewSession(&aws.Config{
 		Region: aws.String(config.AwsRegion),

@@ -18,7 +18,7 @@ import (
 type GoogleCloudStorage struct {
 }
 
-func getClient(ctx context.Context, config models.Config) (storage.Client, error) {
+func getClient(ctx context.Context, config *models.Config) (storage.Client, error) {
 	usr, err := user.Current()
 	if err != nil {
 		log.Fatal(err)
@@ -32,7 +32,7 @@ func getClient(ctx context.Context, config models.Config) (storage.Client, error
 	return *client, nil
 }
 
-func (a GoogleCloudStorage) ListItems(config models.Config) ([]models.Item, error) {
+func (a GoogleCloudStorage) ListItems(config *models.Config) ([]models.Item, error) {
 
 	ctx := context.Background()
 	client, err := getClient(ctx, config)
@@ -59,7 +59,7 @@ func (a GoogleCloudStorage) ListItems(config models.Config) ([]models.Item, erro
 
 	return items, err
 }
-func (a GoogleCloudStorage) PutItem(config models.Config, filename string) (models.Item, error) {
+func (a GoogleCloudStorage) PutItem(config *models.Config, filename string) (models.Item, error) {
 	item := models.Item{}
 
 	ctx := context.Background()
@@ -89,7 +89,7 @@ func (a GoogleCloudStorage) PutItem(config models.Config, filename string) (mode
 	return item, nil
 }
 
-func (a GoogleCloudStorage) GetItem(config models.Config, itemName string) (models.Item, error) {
+func (a GoogleCloudStorage) GetItem(config *models.Config, itemName string) (models.Item, error) {
 
 	item := models.Item{}
 	ctx := context.Background()
@@ -125,7 +125,7 @@ func (a GoogleCloudStorage) GetItem(config models.Config, itemName string) (mode
 	return item, nil
 }
 
-func (a GoogleCloudStorage) DeleteItem(config models.Config, obj string) (string, error) {
+func (a GoogleCloudStorage) DeleteItem(config *models.Config, obj string) (string, error) {
 	ctx := context.Background()
 	client, err := getClient(ctx, config)
 	if err != nil {
