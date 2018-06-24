@@ -9,6 +9,12 @@ import (
 	"github.com/mkez00/blobber/services"
 )
 
+func f(from string) {
+	for i := 0; i < 3; i++ {
+		fmt.Println(from, ":", i)
+	}
+}
+
 func main() {
 
 	// if no arguments passed print help
@@ -29,21 +35,22 @@ func main() {
 	}
 	service := getImplementation(config)
 
-	if action == "list" {
+	switch action {
+	case "list":
 		processListItems(service, config)
-	} else if action == "put" {
+	case "put":
 		processPutItem(service, config, os.Args)
-	} else if action == "get" {
+	case "get":
 		processGetItem(service, config, os.Args)
-	} else if action == "delete" {
+	case "delete":
 		processDeleteItem(service, config, os.Args)
-	} else if action == "help" {
+	case "help":
 		printHelp()
-	} else if action == "config" {
+	case "config":
 		fmt.Printf("%+v\n", config)
-	} else if action == "version" {
+	case "version":
 		fmt.Println(getVersion())
-	} else {
+	default:
 		fmt.Println(action + " is not a valid argument")
 	}
 }
@@ -103,11 +110,12 @@ func printItems(items []models.Item) {
 }
 
 func getImplementation(config models.Config) services.BaseBlobService {
-	if config.StorageService == "AmazonS3" {
+	switch config.StorageService {
+	case "AmazonS3":
 		return services.AmazonS3{}
-	} else if config.StorageService == "GoogleCloudStorage" {
+	case "GoogleCloudStorage":
 		return services.GoogleCloudStorage{}
-	} else {
+	default:
 		return services.AmazonS3{}
 	}
 }
