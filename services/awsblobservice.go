@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 
@@ -58,6 +59,10 @@ func (a AmazonS3) PutItem(config *models.Config, filename string) (models.Item, 
 
 	filename = filepath.Base(filename)
 
+	ticker := Pending("Uploading")
+	defer fmt.Println("")
+	defer ticker.Stop()
+
 	_, err = uploader.Upload(&s3manager.UploadInput{
 		Bucket: aws.String(bucket),
 		Key:    aws.String(filename),
@@ -86,6 +91,10 @@ func (a AmazonS3) GetItem(config *models.Config, itemName string) (models.Item, 
 	}
 
 	defer file.Close()
+
+	ticker := Pending("Downloading")
+	defer fmt.Println("")
+	defer ticker.Stop()
 
 	numBytes, err := downloader.Download(file,
 		&s3.GetObjectInput{

@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -78,6 +79,10 @@ func (a GoogleCloudStorage) PutItem(config *models.Config, filename string) (mod
 	filename = filepath.Base(filename)
 	writer := bucket.Object(filename).NewWriter(ctx)
 
+	ticker := Pending("Uploading")
+	defer fmt.Println("")
+	defer ticker.Stop()
+
 	if _, err := io.Copy(writer, file); err != nil {
 		return item, err
 	}
@@ -105,6 +110,10 @@ func (a GoogleCloudStorage) GetItem(config *models.Config, itemName string) (mod
 	}
 
 	defer reader.Close()
+
+	ticker := Pending("Downloading")
+	defer fmt.Println("")
+	defer ticker.Stop()
 
 	fileContent, err := ioutil.ReadAll(reader)
 	if err != nil {
