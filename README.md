@@ -21,7 +21,7 @@ Install and Initialization
 -----------------------------------
 
 1) Download `blobber` binary (<a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-linux.zip" target="_blank">Linux Download</a>, <a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-mac.zip" target="_blank">MacOS Download</a>, <a href="https://s3.amazonaws.com/mk-blobber-storage/blobber-win.zip" target="_blank">Windows Download</a>)
-2) If on Linux/MacOS, copy to `/usr/local/bin/`.  If on Windows, update Path environment variable to include directory where executable resides
+2) If on Linux/MacOS, copy extracted binary `blobber` to `/usr/local/bin/`.  If on Windows, update Path environment variable to include directory where `blobber.exe` executable resides
 3) Run `blobber init`
 
 AWS S3 Configuration
