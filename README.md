@@ -6,6 +6,8 @@ Overview
 
 Blobber is a CLI program that simplifies cloud blob storage access when you just want to securely upload/download files without having to constantly remember or retrieve access credentials and configuration details to a specific storage container.  
 
+![Download animation](https://s3.amazonaws.com/mk-blobber-storage/download.gif)
+
 How It Works?
 -----------------------------------
 
